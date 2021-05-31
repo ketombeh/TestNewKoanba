@@ -3,28 +3,28 @@ package com.aries.testkoanba.interactor
 import com.aries.testkoanba.Application
 import com.aries.testkoanba.network.ApiConstant
 import com.aries.testkoanba.network.ApiInterface
-import com.aries.testkoanba.ui.view.MainView
+import com.aries.testkoanba.ui.view.MovieView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.annotations.NotNull
 
-class NowPlayingPresenterImpl : MainView.Presenter {
-    var mainView: MainView.View
+class MoviePresenterImpl : MovieView.Presenter {
+    var mainView: MovieView.View
     var service: ApiInterface
 
     @NotNull
     var disposable: Disposable? = null
 
-    constructor(mainView: MainView.View) {
+    constructor(mainView: MovieView.View) {
         this.mainView = mainView
         this.service = Application.instance.apiService
     }
 
-    override fun loadData(lenguange: String, page: String) {
+    override fun loadData(type: String , lenguange: String, page: String) {
         mainView.showProgressBar()
         if (mainView.isConnected()) {
-            disposable = service.getMoviesNowPlaying(ApiConstant.API_KEY, lenguange , page)
+            disposable = service.getMovies(type ,ApiConstant.API_KEY, lenguange , page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -44,9 +44,9 @@ class NowPlayingPresenterImpl : MainView.Presenter {
         }
     }
 
-    override fun loadMore(lenguange: String , page: String) {
+    override fun loadMore(type: String , lenguange: String , page: String) {
         if (mainView.isConnected()) {
-            disposable = service.getMoviesNowPlaying(ApiConstant.API_KEY, lenguange, page)
+            disposable = service.getMovies(type , ApiConstant.API_KEY, lenguange, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

@@ -13,6 +13,6 @@ interface MovieDetailView {
     }
 
     interface Presenter: BasePresenter {
-        fun getMovieDetail(imdbId: String , lenguange: String)
+        fun getMovieDetail(movieId: String , lenguange: String)
     }
 }

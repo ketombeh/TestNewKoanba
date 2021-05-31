@@ -8,38 +8,39 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aries.testkoanba.R
-import com.aries.testkoanba.interactor.PopularPresenterImpl
-import com.aries.testkoanba.interactor.TopRatedPresenterImpl
+import com.aries.testkoanba.interactor.MoviePresenterImpl
 import com.aries.testkoanba.network.NetworkConnection
 import com.aries.testkoanba.network.response.Movie
 import com.aries.testkoanba.network.response.MovieResponse
 import com.aries.testkoanba.ui.adapter.NowPlayingAdapter
-import com.aries.testkoanba.ui.view.MainView
-import kotlinx.android.synthetic.main.activity_now_playing.*
+import com.aries.testkoanba.ui.view.MovieView
+import kotlinx.android.synthetic.main.activity_movie.*
 
-class TopRatedActivity : AppCompatActivity() , MainView.View, SwipeRefreshLayout.OnRefreshListener{
-    private var presenterImpl: TopRatedPresenterImpl? = null
+class MovieActivity : AppCompatActivity() , MovieView.View, SwipeRefreshLayout.OnRefreshListener{
+    private var presenterImpl: MoviePresenterImpl? = null
     private var adapter: NowPlayingAdapter? = null
     private lateinit var intenString: String
+    private lateinit var title: String
 
     private var page: Int = 1
     private var lenguange: String = "en-US"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_top_rated)
-        presenterImpl = TopRatedPresenterImpl(this)
+        setContentView(R.layout.activity_movie)
+        presenterImpl = MoviePresenterImpl(this)
         adapter = NowPlayingAdapter(this )
         setSupportActionBar(findViewById(R.id.toolbar))
         initView()
 
         if(intent.extras != null){
             val bundle = intent.extras
-            intenString = bundle?.getString("title").toString()
-            presenterImpl!!.loadData(lenguange , page++.toString())
+            title = bundle?.getString("title").toString()
+            intenString = bundle?.getString("titleString").toString()
+            presenterImpl!!.loadData(intenString ,lenguange , page++.toString())
         }
 
-        toolbar.title = intenString
+        toolbar.title = title
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -61,7 +62,7 @@ class TopRatedActivity : AppCompatActivity() , MainView.View, SwipeRefreshLayout
             }
 
             override fun onLoadMore() {
-                presenterImpl!!.loadMore(lenguange ,page++.toString())
+                presenterImpl!!.loadMore(intenString ,lenguange ,page++.toString())
             }
         })
     }

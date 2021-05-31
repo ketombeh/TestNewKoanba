@@ -46,22 +46,31 @@ class MainActivity : AppCompatActivity() , onItemClickListener {
         items.add(MenuModel(R.drawable.ic_movie , "Now Playing"))
         items.add(MenuModel(R.drawable.ic_popular , "Popular"))
         items.add(MenuModel(R.drawable.ic_top_rated , "Top Rate"))
+        items.add(MenuModel(R.drawable.ic_upcoming , "Upcoming"))
 
         menuAdapter?.addAllItem(items)
     }
 
     override fun onItemClick(v: View?, position: Int?){
         if(position == 0){
-            val intent = Intent(this@MainActivity , NowPlayingActivity::class.java)
+            val intent = Intent(this@MainActivity , MovieActivity::class.java)
             intent.putExtra("title" , "Now Playing")
+            intent.putExtra("titleString" , "now_playing")
             startActivity(intent)
         }else if(position == 1){
-            val intent = Intent(this@MainActivity , PopularActivity::class.java)
+            val intent = Intent(this@MainActivity , MovieActivity::class.java)
             intent.putExtra("title" , "Popular Movie")
+            intent.putExtra("titleString" , "popular")
             startActivity(intent)
         }else if(position == 2){
-            val intent = Intent(this@MainActivity , TopRatedActivity::class.java)
+            val intent = Intent(this@MainActivity , MovieActivity::class.java)
             intent.putExtra("title" , "Top Rated")
+            intent.putExtra("titleString" , "top_rated")
+            startActivity(intent)
+        }else if(position == 3){
+            val intent = Intent(this@MainActivity , MovieActivity::class.java)
+            intent.putExtra("title" , "Upcoming")
+            intent.putExtra("titleString" , "upcoming")
             startActivity(intent)
         }
     }

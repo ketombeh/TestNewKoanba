@@ -3,7 +3,7 @@ package com.aries.testkoanba.ui.view
 import com.aries.testkoanba.network.response.Movie
 import com.aries.testkoanba.network.response.MovieResponse
 
-interface MainView {
+interface MovieView {
 
     interface View : BaseView {
         fun onSuccess(result: MovieResponse, isAppend: Boolean)
@@ -12,7 +12,7 @@ interface MainView {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(lenguange: String ,page: String)
-        fun loadMore(lenguange: String ,page: String)
+        fun loadData(type: String ,lenguange: String ,page: String)
+        fun loadMore(type: String ,lenguange: String ,page: String)
     }
 }

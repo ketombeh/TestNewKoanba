@@ -10,22 +10,9 @@ import retrofit2.http.Query
 
 interface ApiInterface {
 
-    @GET(ApiConstant.NOW_PLAYING) // only show now playing
-    fun getMoviesNowPlaying(
-        @Query("api_key") api_key: String,
-        @Query("language") lenguange: String,
-        @Query("page") page: String
-    ): Observable<Response<MovieResponse>>
-
-    @GET(ApiConstant.POPULAR) // only show now playing
-    fun getMoviesPopular(
-        @Query("api_key") api_key: String,
-        @Query("language") lenguange: String,
-        @Query("page") page: String
-    ): Observable<Response<MovieResponse>>
-
-    @GET(ApiConstant.TOP_RATE) // only show now playing
-    fun getMoviesTopRated(
+    @GET(ApiConstant.MOVIE) // only show now playing
+    fun getMovies(
+        @Path("type") type: String,
         @Query("api_key") api_key: String,
         @Query("language") lenguange: String,
         @Query("page") page: String
